@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import RecipeListView from "./RecipeListView";
-import { getRecipes } from "../../api/recipeApi";
 import ContentHeader from "../common/PageHeader";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import * as authorActions from "../../redux/actions/authorActions";
 import * as recipeActions from "../../redux/actions/recipeActions";
 import { bindActionCreators } from "redux";
 
@@ -23,35 +21,44 @@ function RecipeListPage({ recipes, actions }) {
   );
 }
 
-function getRecipesWithAuthorsFromState(state) {
+RecipeListPage.propTypes = {
+  actions: PropTypes.object.isRequired
+};
+
+function getAuthorNameFromId(authorId, allAuthors) {
+  return allAuthors.find(author => author.id === authorId).name;
+}
+
+function getIncludedTagObjects(recipeTagIds, allTags) {
+  return allTags.filter(tag => recipeTagIds.includes(tag.id));
+}
+
+function getRecipesWithAuthorsAndTagsFromState(state) {
   if (state.authors.length === 0) {
     return [];
   }
   return state.recipes.map(recipe => {
     return {
       ...recipe,
-      authorName: state.authors.find(author => author.id === recipe.authorId)
-        .name
+      authorName: getAuthorNameFromId(recipe.id, state.authors),
+      tags: getIncludedTagObjects(recipe.tags, state.tags)
     };
   });
 }
 
-RecipeListPage.propTypes = {
-  actions: PropTypes.object.isRequired
-};
-
 function mapStateToProps(state) {
-  let recipesWithAuthors =
-    state.authors.length === 0 ? [] : getRecipesWithAuthorsFromState(state);
+  let recipesWithAuthersAndTags = [];
+  if (state.authors.length > 0 && state.tags.length > 0) {
+    recipesWithAuthersAndTags = getRecipesWithAuthorsAndTagsFromState(state);
+  }
   return {
-    authors: state.authors,
-    recipes: recipesWithAuthors
+    recipes: recipesWithAuthersAndTags
   };
 }
+
 function mapDispatchToProps(dispatch) {
   return {
     actions: {
-      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
       loadRecipes: bindActionCreators(recipeActions.loadRecipes, dispatch)
     }
   };

@@ -11,9 +11,13 @@ const RecipeListViewItem = ({ recipe }) => (
         {recipe.authorName}
       </a>{" "}
       under{" "}
-      <a className="recipe-category" href="#">
-        JavaScript
-      </a>
+      {recipe.tags.map(tag => {
+        return (
+          <a key={tag.id} className="recipe-category" href="#">
+            {tag.label + "  "}
+          </a>
+        );
+      })}
     </p>
 
     <div className="recipe-description">
