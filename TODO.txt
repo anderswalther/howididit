@@ -1,0 +1,8 @@
+Toasts
+nicer buttons
+add abstract to recipe
+introduce categories
+extract form elements into smaller and reusable components
+split css into smaller files
+enable adding new tag on the fly
+show tags on recipe-view page
