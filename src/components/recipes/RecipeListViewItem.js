@@ -8,7 +8,7 @@ const RecipeListViewItem = ({ recipe }) => (
     <p className="recipe-meta">
       By{" "}
       <a className="recipe-author" href="#">
-        Eric Ferraiuolo
+        {recipe.authorName}
       </a>{" "}
       under{" "}
       <a className="recipe-category" href="#">
