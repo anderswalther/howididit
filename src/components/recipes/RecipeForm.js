@@ -1,5 +1,6 @@
 import React from "react";
 import MultiSelect from "../common/formElements/MultiSelect";
+import Editor from "../common/Editor";
 
 function createDefaultTagValues(selectedTagIds, allTags) {
   const selectedTagObjects = allTags
@@ -27,16 +28,7 @@ const RecipeForm = ({
         value={recipe.title}
         onChange={onValueChange}
       />
-      <label htmlFor="content">Content</label>
-      <textarea
-        id="content"
-        name="content"
-        rows="15"
-        cols="50"
-        value={recipe.content}
-        onChange={onValueChange}
-      ></textarea>
-      <label htmlFor="tags">Tags</label>
+      <Editor name={"Conten"} value={recipe.content} onChange={onValueChange} />
 
       <MultiSelect
         allObjects={tags}
@@ -53,5 +45,4 @@ const RecipeForm = ({
     </form>
   );
 };
-
 export default RecipeForm;

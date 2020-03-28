@@ -4,7 +4,7 @@ import RecipeListViewItem from "./RecipeListViewItem";
 
 const RecipeListView = ({ recipes }) => (
   <div className="page-content">
-    <div className="list-actions">
+    <div className="content-actions">
       <button className="btn">
         <Link to={"/recipe"}>Add</Link>
       </button>

@@ -1,13 +1,24 @@
 import React from "react";
 import hljs from "highlight.js";
-import "highlight.js/styles/github.css";
+import { Link } from "react-router-dom";
+import "highlight.js/styles/ocean.css";
+import * as blocks from "../common/Editor";
 
 class RecipeListView extends React.Component {
   constructor(props) {
     super(props);
+    this.parseBlocks = this.parseBlocks.bind(this);
   }
   componentDidUpdate() {
     this.updateCodeSyntaxHighlighting();
+  }
+
+  parseBlocks(originalText) {
+    return originalText
+      .replace(blocks.CODE_BLOCK.start, blocks.CODE_BLOCK.actualStart)
+      .replace(blocks.CODE_BLOCK.end, blocks.CODE_BLOCK.actualEnd)
+      .replace(blocks.BOLD_BLOCK.start, blocks.BOLD_BLOCK.actualStart)
+      .replace(blocks.BOLD_BLOCK.end, blocks.BOLD_BLOCK.actualEnd);
   }
 
   updateCodeSyntaxHighlighting = () => {
@@ -19,18 +30,16 @@ class RecipeListView extends React.Component {
   render() {
     return (
       <article key={this.props.recipe.id} className="page-content">
-        <p className="recipe-meta">
-          By{" "}
-          <a className="recipe-author" href="#">
-            Eric Ferraiuolo
-          </a>{" "}
-          under{" "}
-          <a className="recipe-category" href="#">
-            JavaScript
-          </a>
-        </p>
-
-        <div dangerouslySetInnerHTML={{ __html: this.props.recipe.content }} />
+        <div className="content-actions">
+          <button className="btn">
+            <Link to={"/recipes"}>Back</Link>
+          </button>
+        </div>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: this.parseBlocks(this.props.recipe.content)
+          }}
+        />
       </article>
     );
   }
