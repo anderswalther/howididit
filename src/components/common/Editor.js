@@ -54,7 +54,10 @@ function Editor({ name, value, onChange }) {
   return (
     <>
       <label htmlFor="content">Content</label>
-      <button onClick={e => addBlockStyling(e, CODE_BLOCK)}>code</button>
+      <button onClick={e => addBlockStyling(e, CODE_BLOCK)}>code block</button>
+      <button onClick={e => addBlockStyling(e, CODE_INLINE)}>
+        code inline
+      </button>
       <button onClick={e => addBlockStyling(e, BOLD_BLOCK)}>bold</button>
       <textarea
         ref={textArea}
@@ -75,10 +78,17 @@ function Editor({ name, value, onChange }) {
 export default Editor;
 
 export const CODE_BLOCK = {
-  start: " __c ",
-  end: " c__ ",
-  actualStart: "<pre><code>",
-  actualEnd: "</pre></code>"
+  start: "<c>",
+  end: "</c>",
+  actualStart: "<div class='highlight'>",
+  actualEnd: "</div>"
+};
+
+export const CODE_INLINE = {
+  start: "<ci>",
+  end: "</ci>",
+  actualStart: "<span class='highlight'>",
+  actualEnd: "</span>"
 };
 
 export const BOLD_BLOCK = {

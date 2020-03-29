@@ -39,9 +39,6 @@ const RecipeForm = ({
       <button type="submit" disabled={isSaving}>
         {isSaving ? "Saving" : "Save"}
       </button>
-      <button type="submit" disabled={isSaving}>
-        {isSaving ? "Saving" : "Save"}
-      </button>
     </form>
   );
 };

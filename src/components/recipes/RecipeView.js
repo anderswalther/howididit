@@ -1,10 +1,11 @@
 import React from "react";
 import hljs from "highlight.js";
-import { Link } from "react-router-dom";
-import "highlight.js/styles/ocean.css";
+//import "highlight.js/styles/github.css";
+import "highlight.js/styles/tomorrow-night.css";
+
 import * as blocks from "../common/Editor";
 
-class RecipeListView extends React.Component {
+class RecipeView extends React.Component {
   constructor(props) {
     super(props);
     this.parseBlocks = this.parseBlocks.bind(this);
@@ -14,35 +15,43 @@ class RecipeListView extends React.Component {
   }
 
   parseBlocks(originalText) {
-    return originalText
-      .replace(blocks.CODE_BLOCK.start, blocks.CODE_BLOCK.actualStart)
-      .replace(blocks.CODE_BLOCK.end, blocks.CODE_BLOCK.actualEnd)
-      .replace(blocks.BOLD_BLOCK.start, blocks.BOLD_BLOCK.actualStart)
-      .replace(blocks.BOLD_BLOCK.end, blocks.BOLD_BLOCK.actualEnd);
+    return (
+      "<pre>" +
+      originalText
+        .split(blocks.CODE_BLOCK.start)
+        .join(blocks.CODE_BLOCK.actualStart)
+        .split(blocks.CODE_BLOCK.end)
+        .join(blocks.CODE_BLOCK.actualEnd)
+        .split(blocks.CODE_INLINE.start)
+        .join(blocks.CODE_INLINE.actualStart)
+        .split(blocks.CODE_INLINE.end)
+        .join(blocks.CODE_INLINE.actualEnd)
+        .split(blocks.BOLD_BLOCK.start)
+        .join(blocks.BOLD_BLOCK.actualStart)
+        .split(blocks.BOLD_BLOCK.end)
+        .join(blocks.BOLD_BLOCK.actualEnd) +
+      "</pre>"
+    );
   }
 
   updateCodeSyntaxHighlighting = () => {
-    document.querySelectorAll("pre code").forEach(block => {
+    let divsToHightlight = document.querySelectorAll("div.highlight");
+    let spansToHightlight = document.querySelectorAll("span.highlight");
+    [...divsToHightlight, ...spansToHightlight].forEach(block => {
       hljs.highlightBlock(block);
     });
   };
 
   render() {
     return (
-      <article key={this.props.recipe.id} className="page-content">
-        <div className="content-actions">
-          <button className="btn">
-            <Link to={"/recipes"}>Back</Link>
-          </button>
-        </div>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: this.parseBlocks(this.props.recipe.content)
-          }}
-        />
-      </article>
+      <div
+        className="recipe-content"
+        dangerouslySetInnerHTML={{
+          __html: this.parseBlocks(this.props.content)
+        }}
+      />
     );
   }
 }
 
-export default RecipeListView;
+export default RecipeView;

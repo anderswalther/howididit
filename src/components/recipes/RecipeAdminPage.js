@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as tagActions from "../../redux/actions/tagActions";
 import { bindActionCreators } from "redux";
+import RecipeView from "./RecipeView";
 
 const newCourse = {
   id: null,
@@ -84,6 +85,9 @@ class RecipeAdminPage extends React.Component {
           onValueChange={this.onValueChangeHandler}
           onTagsValueChange={this.onTagsValueChangedHandler}
         ></RecipeForm>
+        <h3>Preview</h3>
+
+        <RecipeView content={this.state.recipe.content}></RecipeView>
       </>
     );
   }

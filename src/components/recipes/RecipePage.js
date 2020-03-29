@@ -2,7 +2,7 @@ import React from "react";
 import { getRecipe, saveRecipe } from "../../api/recipeApi";
 import { getTags } from "../../api/tagsApi";
 import Spinner from "../common/Spinner";
-import RecipeView from "./RecipeView";
+import RecipePageView from "./RecipePageView";
 import ContentHeader from "../common/PageHeader";
 
 const newCourse = {
@@ -51,7 +51,7 @@ class RecipePage extends React.Component {
     ) : (
       <>
         <ContentHeader subTitle={this.state.recipe.title} />
-        <RecipeView recipe={this.state.recipe}></RecipeView>
+        <RecipePageView recipe={this.state.recipe}></RecipePageView>
       </>
     );
   }
