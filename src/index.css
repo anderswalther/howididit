@@ -152,8 +152,7 @@ form.pure-form-stacked > .selectField {
 
 .pure-button {
   margin-right: 5px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  color: white;
+  color: #2e2f3e;
 }
 .button-xsmall {
   font-size: 70%;
@@ -170,6 +169,15 @@ form.pure-form-stacked > .selectField {
 .button-xlarge {
   font-size: 125%;
 }
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
 .button-success {
   background: rgb(51, 119, 61); /* this is a green */
 }
@@ -198,7 +206,7 @@ form.pure-form-stacked > .selectField {
 .recipe-content pre {
   margin-top: 0px;
   font-family: "Domine", serif;
-  overflow: hidden;
+  white-space: pre-wrap;
 }
 
 div.highlight {
@@ -206,10 +214,40 @@ div.highlight {
 }
 span.highlight {
   display: inline !important;
-  padding: 0.05em 0.5em !important;
+  padding: 0.2em 0.5em 0.3em !important;
 }
 
 .highlight {
   border-radius: 8px;
   font-family: "Roboto Mono", monospace;
+  font-size: 0.7em;
+}
+
+pre code {
+  margin: 10px 0;
+}
+p code {
+  display: inline !important;
+  padding: 0.2em 0.5em 0.3em !important;
+}
+
+code {
+  border-radius: 8px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.7em;
+}
+
+.editor .editor-actions {
+  height: 40px;
+  background-color: #e6e6e6;
+}
+.editor .editor-actions button {
+  height: 100%;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+.editor textarea {
+  margin-top: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

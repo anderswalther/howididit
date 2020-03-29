@@ -31,6 +31,8 @@ function Editor({ name, value, onChange }) {
       content.slice(selectEnd)
     ].join("");
     setNewValue(el, content);
+    el.selectionStart = el.selectionEnd = el.selectionStart - 4;
+    textArea.current.focus();
   }
 
   function handleTabPressed(e) {
@@ -54,23 +56,46 @@ function Editor({ name, value, onChange }) {
   return (
     <>
       <label htmlFor="content">Content</label>
-      <button onClick={e => addBlockStyling(e, CODE_BLOCK)}>code block</button>
-      <button onClick={e => addBlockStyling(e, CODE_INLINE)}>
-        code inline
-      </button>
-      <button onClick={e => addBlockStyling(e, BOLD_BLOCK)}>bold</button>
-      <textarea
-        ref={textArea}
-        id="content"
-        name="content"
-        rows="15"
-        cols="50"
-        value={value}
-        onChange={e => {
-          onChange(e);
-        }}
-        onKeyDown={e => handleTabPressed(e)}
-      ></textarea>
+      <div className="editor">
+        <div className="editor-actions">
+          <button
+            className="button-xsmall button-normal pure-button"
+            onClick={e => addBlockStyling(e, CODE_BLOCK)}
+          >
+            code block
+          </button>
+          <button
+            className="button-xsmall pure-button"
+            onClick={e => addBlockStyling(e, CODE_INLINE)}
+          >
+            code inline
+          </button>
+          <button
+            className="button-xsmall pure-button"
+            onClick={e => addBlockStyling(e, BOLD_BLOCK)}
+          >
+            bold
+          </button>
+          <button
+            className="button-xsmall pure-button"
+            onClick={e => addBlockStyling(e, ITALIC_BLOCK)}
+          >
+            italic
+          </button>
+        </div>
+        <textarea
+          ref={textArea}
+          id="content"
+          name="content"
+          rows="15"
+          cols="50"
+          value={value}
+          onChange={e => {
+            onChange(e);
+          }}
+          onKeyDown={e => handleTabPressed(e)}
+        ></textarea>
+      </div>
       <label htmlFor="tags">Tags</label>
     </>
   );
@@ -78,22 +103,21 @@ function Editor({ name, value, onChange }) {
 export default Editor;
 
 export const CODE_BLOCK = {
-  start: "<c>",
-  end: "</c>",
-  actualStart: "<div class='highlight'>",
-  actualEnd: "</div>"
+  start: "```\n",
+  end: "\n```"
 };
 
 export const CODE_INLINE = {
-  start: "<ci>",
-  end: "</ci>",
-  actualStart: "<span class='highlight'>",
-  actualEnd: "</span>"
+  start: "`",
+  end: "`"
 };
 
 export const BOLD_BLOCK = {
-  start: " __b ",
-  end: " b__ ",
-  actualStart: "<b>",
-  actualEnd: "</b>"
+  start: "**",
+  end: "**"
+};
+
+export const ITALIC_BLOCK = {
+  start: "*",
+  end: "*"
 };

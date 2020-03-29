@@ -12,3 +12,5 @@ add previe fidl
 
 make sure that highlighting inline does not inlcude whitespace.
 investigate why vertical borders are introduced
+
+use markdown - BUT MOVE IT AWAY FROM EDITOR...suk
