@@ -1,5 +1,5 @@
 import React from "react";
-import RecipeListPage from "./components/recipe/RecipeListPage";
+import RecipePage from "./components/recipe/RecipePage";
 //import RecipeAdminPage from "./components/recipe/RecipeAdminPage";
 import { Route, Switch } from "react-router-dom";
 import SideBar from "./components/sidebar/SideBar";
@@ -11,9 +11,11 @@ function App() {
       <Header></Header>
       <div className="page-content">
         <Switch>
-          <Route path="/recipes/:id" component={RecipeListPage} />
-          <Route path="/recipes" component={RecipeListPage} />
-          <Route path="/" component={RecipeListPage} />
+          <Route path="/recipes/:id" component={RecipePage} />
+          <Route path="/recipes/:id/edit" component={RecipePage} />
+          <Route path="/recipes/create" component={RecipePage} />
+          <Route path="/recipes" component={RecipePage} />
+          <Route path="/" component={RecipePage} />
         </Switch>
       </div>
     </>

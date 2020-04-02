@@ -2,11 +2,15 @@ import React from "react";
 import CreatableSelect from "react-select/creatable";
 
 function createDefaultTagValues(selectedObjectIds, allObjects) {
-  return allObjects
+  console.log("in create default", selectedObjectIds, allObjects);
+
+  let defaultValues = allObjects
     .filter(obj => selectedObjectIds.includes("" + obj.id))
     .map(obj => {
       return { key: obj.id, value: obj.id, label: obj.label };
     });
+  console.log(defaultValues);
+  return defaultValues;
 }
 
 const MultiSelect = ({ selectedObjectIds, allObjects, onValueChange }) => {

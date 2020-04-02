@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import RecipeListItem from "./ListItem";
 
-const RecipeList = ({ recipes }) => (
+const RecipeList = ({ recipes, activeRecipeId }) => (
   <>
     <div className="content-actions">
       <button className="btn">
@@ -10,7 +10,14 @@ const RecipeList = ({ recipes }) => (
       </button>
     </div>
     {recipes.map(recipe => {
-      return <RecipeListItem recipe={recipe} key={recipe.id}></RecipeListItem>;
+      let isActive = recipe.id === activeRecipeId;
+      return (
+        <RecipeListItem
+          recipe={recipe}
+          key={recipe.id}
+          isActive={isActive}
+        ></RecipeListItem>
+      );
     })}
   </>
 );

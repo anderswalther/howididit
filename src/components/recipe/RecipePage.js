@@ -1,7 +1,7 @@
 import React from "react";
 import Spinner from "../common/Spinner";
-import RecipeForm from "./views/Form";
 import RecipeDetails from "./views/Details";
+import RecipeEditPage from "./RecipeEditPage";
 import RecipeList from "./views/List";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -19,12 +19,13 @@ const recipeTemplate = {
   tags: []
 };
 
-class RecipeListPage extends React.Component {
+class RecipePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentRecipe: recipeTemplate
     };
+    this.contentUpdated = this.contentUpdated.bind(this);
   }
 
   componentDidMount() {
@@ -44,41 +45,62 @@ class RecipeListPage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(
-      "in components will receive props. Id from url: " +
-        nextProps.match.params.id
-    );
     const { recipes, tags, authors } = nextProps;
     if (recipes.length > 0 && tags.length > 0 && authors.length > 0) {
-      console.log("in components will receive props - all props available");
       let recipeToShow = recipes[0];
+      console.log(nextProps.match.params.show);
       if (nextProps.match.params.id) {
         recipeToShow = recipes.find(
           recipe => recipe.id === nextProps.match.params.id
         );
-        console.log("recipe found with id : " + recipeToShow.id);
       }
       this.setState({ currentRecipe: recipeToShow });
     }
   }
 
+  contentUpdated(updatedRecipe) {
+    this.props.actions.loadRecipes();
+    this.props.history.push("/recipes/" + updatedRecipe.id);
+  }
+
   render() {
+    const isInEditMode = this.props.location.pathname.includes("edit");
+
+    let recipeViewToShow;
+    if (isInEditMode) {
+      recipeViewToShow = (
+        <RecipeEditPage
+          recipe={this.state.currentRecipe}
+          tags={this.props.tags}
+          contentUpdatedCallback={this.contentUpdated}
+        ></RecipeEditPage>
+      );
+    } else {
+      recipeViewToShow = (
+        <RecipeDetails recipe={this.state.currentRecipe}></RecipeDetails>
+      );
+    }
+
     return this.props.apiCallsInProgress > 0 ? (
       <Spinner />
     ) : (
       <>
         <div className="main-content">
-          <RecipeList recipes={this.props.recipes}></RecipeList>
+          <div className="main-content-view">
+            <RecipeList
+              recipes={this.props.recipes}
+              activeRecipeId={this.state.currentRecipe.id}
+            ></RecipeList>
+          </div>
         </div>
-        <div className="side-content">
-          <RecipeDetails recipe={this.state.currentRecipe}></RecipeDetails>
-        </div>
+
+        <div className="side-content">{recipeViewToShow}</div>
       </>
     );
   }
 }
 
-RecipeListPage.propTypes = {
+RecipePage.propTypes = {
   actions: PropTypes.object.isRequired,
   recipes: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
@@ -130,4 +152,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(RecipeListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipePage);

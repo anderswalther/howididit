@@ -5,12 +5,15 @@ import commonmark from "commonmark";
 
 import * as blocks from "../../common/Editor";
 
-class Details extends React.Component {
+class RecipeDetails extends React.Component {
   constructor(props) {
     super(props);
     this.parseBlocks = this.parseBlocks.bind(this);
     this.reader = new commonmark.Parser();
     this.writer = new commonmark.HtmlRenderer();
+  }
+  componentDidMount() {
+    this.updateCodeSyntaxHighlighting();
   }
   componentDidUpdate() {
     this.updateCodeSyntaxHighlighting();
@@ -44,4 +47,4 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default RecipeDetails;
