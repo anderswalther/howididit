@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import RecipeListView from "./RecipeListView";
-import ContentHeader from "../common/PageHeader";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as recipeActions from "../../redux/actions/recipeActions";

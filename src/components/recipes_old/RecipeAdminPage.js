@@ -3,7 +3,6 @@ import { getRecipe, saveRecipe } from "../../api/recipeApi";
 import { getTags } from "../../api/tagsApi";
 import Spinner from "../common/Spinner";
 import RecipeForm from "./RecipeForm";
-import ContentHeader from "../common/PageHeader";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as tagActions from "../../redux/actions/tagActions";

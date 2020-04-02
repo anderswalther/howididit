@@ -1,25 +1,22 @@
 import React from "react";
-import MainContent from "./components/recipes/RecipeListPage";
-import RecipeAdminPage from "./components/recipes/RecipeAdminPage";
-import RecipePage from "./components/recipes/RecipePage";
+import RecipeListPage from "./components/recipe/RecipeListPage";
+//import RecipeAdminPage from "./components/recipe/RecipeAdminPage";
 import { Route, Switch } from "react-router-dom";
 import SideBar from "./components/sidebar/SideBar";
+import Header from "./components/Header";
 
 function App() {
   return (
-    <div className="layout">
-      <SideBar />
-      <div className="content-wrapper">
-        <div className="content">
-          <Switch>
-            <Route path="/admin/recipe/:id" component={RecipeAdminPage} />
-            <Route path="/recipe/:id" component={RecipePage} />
-            <Route path="/recipe" component={RecipePage} />
-            <Route component={MainContent} />
-          </Switch>
-        </div>
+    <>
+      <Header></Header>
+      <div className="page-content">
+        <Switch>
+          <Route path="/recipes/:id" component={RecipeListPage} />
+          <Route path="/recipes" component={RecipeListPage} />
+          <Route path="/" component={RecipeListPage} />
+        </Switch>
       </div>
-    </div>
+    </>
   );
 }
 

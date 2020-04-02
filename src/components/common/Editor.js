@@ -31,7 +31,8 @@ function Editor({ name, value, onChange }) {
       content.slice(selectEnd)
     ].join("");
     setNewValue(el, content);
-    el.selectionStart = el.selectionEnd = el.selectionStart - 4;
+    el.selectionStart = el.selectionEnd =
+      el.selectionStart - blockType.start.length;
     textArea.current.focus();
   }
 

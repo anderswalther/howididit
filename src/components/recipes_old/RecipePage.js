@@ -3,7 +3,6 @@ import { getRecipe, saveRecipe } from "../../api/recipeApi";
 import { getTags } from "../../api/tagsApi";
 import Spinner from "../common/Spinner";
 import RecipePageView from "./RecipePageView";
-import ContentHeader from "../common/PageHeader";
 
 const newCourse = {
   id: null,
