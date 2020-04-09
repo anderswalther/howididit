@@ -48,7 +48,6 @@ class RecipePage extends React.Component {
     const { recipes, tags, authors } = nextProps;
     if (recipes.length > 0 && tags.length > 0 && authors.length > 0) {
       let recipeToShow = recipes[0];
-      console.log(nextProps.match.params.show);
       if (nextProps.match.params.id) {
         recipeToShow = recipes.find(
           recipe => recipe.id === nextProps.match.params.id
