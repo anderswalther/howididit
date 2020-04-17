@@ -2,7 +2,7 @@ import { prettyDOM } from "@testing-library/react";
 
 const prod = {
   url: {
-    API_URL: "Not defined yet",
+    API_URL: "http://howididit-exp-v2-dev.eu-west-1.elasticbeanstalk.com/",
   },
 };
 
