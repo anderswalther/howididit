@@ -1,3 +1,5 @@
+@import "../../../css/colors.css";
+
 .search-container {
   width: fit-content;
   position: relative;
@@ -7,12 +9,12 @@
   position: absolute;
   left: 7px;
   top: calc(50% - 0.5em);
-  color: #bbc0c4;
+  color: var(--input-icon-color);
 }
 .search-input {
   margin: 0;
   width: 600px;
-  color: #3c4146;
+  color: var(--input-font-color);
   padding-left: 30px;
 }
 
@@ -23,7 +25,7 @@
   border-radius: 4px;
   font-size: 13px;
   background-color: white;
-  border: 1px solid #d6d9dc;
+  border: 1px solid var(--border-color);
 }
 
 .search-sugggestions {

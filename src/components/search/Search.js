@@ -23,7 +23,7 @@ class Search extends React.Component {
   }
 
   onClickOutside(e) {
-    if (!inputRef.current.contains(e.target)) {
+    if (!inputRef.current || !inputRef.current.contains(e.target)) {
       this.setState({ showSuggestions: false });
     }
   }
@@ -42,9 +42,9 @@ class Search extends React.Component {
     this.setState({ value: queryString });
 
     if (queryString.length > 2) {
-      searchRecipes(queryString).then(recipes => {
-        const searchSuggestions = recipes.map(recipe => {
-          const tags = this.props.tags.filter(tag =>
+      searchRecipes(queryString).then((recipes) => {
+        const searchSuggestions = recipes.map((recipe) => {
+          const tags = this.props.tags.filter((tag) =>
             recipe.tags.includes(tag.id)
           );
           return { id: recipe.id, title: recipe.title, tags: tags };
@@ -75,12 +75,12 @@ class Search extends React.Component {
 }
 
 Search.propTypes = {
-  tags: PropTypes.array.isRequired
+  tags: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    tags: state.tags
+    tags: state.tags,
   };
 }
 

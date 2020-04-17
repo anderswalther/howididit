@@ -16,14 +16,14 @@ const recipeTemplate = {
   content: "defaultContent",
   authorId: null,
   category: "",
-  tags: []
+  tags: [],
 };
 
 class RecipePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentRecipe: recipeTemplate
+      currentRecipe: recipeTemplate,
     };
     this.contentUpdated = this.contentUpdated.bind(this);
   }
@@ -48,10 +48,15 @@ class RecipePage extends React.Component {
     const { recipes, tags, authors } = nextProps;
     if (recipes.length > 0 && tags.length > 0 && authors.length > 0) {
       let recipeToShow = recipes[0];
-      if (nextProps.match.params.id) {
-        recipeToShow = recipes.find(
-          recipe => recipe.id === nextProps.match.params.id
-        );
+      try {
+        const selectedRecipeId = parseInt(nextProps.match.params.id);
+        if (selectedRecipeId) {
+          recipeToShow = recipes.find(
+            (recipe) => recipe.id === selectedRecipeId
+          );
+        }
+      } catch (e) {
+        //do nothing
       }
       this.setState({ currentRecipe: recipeToShow });
     }
@@ -84,6 +89,24 @@ class RecipePage extends React.Component {
       <Spinner />
     ) : (
       <>
+        <div className="page-header ">
+          <div className="page-header-section page-header-section-text">
+            <p>
+              <b>Learn</b> from your previous solution
+            </p>
+            <p>
+              <b>Remember</b> your newly acquired knowledge
+            </p>
+            <p>
+              <b>Share</b> your ideas and learn from others
+            </p>
+          </div>
+          <div className="page-header-section page-header-section-buttons">
+            <button className="pure-button button-xlarge button-secondary">
+              Add new how-to
+            </button>
+          </div>
+        </div>
         <div className="main-content">
           <div className="main-content-view">
             <RecipeList
@@ -104,26 +127,28 @@ RecipePage.propTypes = {
   recipes: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
   authors: PropTypes.array.isRequired,
-  apiCallsInProgress: PropTypes.number.isRequired
+  apiCallsInProgress: PropTypes.number.isRequired,
 };
 
+/*
 function getAuthorNameFromId(authorId, allAuthors) {
-  return allAuthors.find(author => author.id === authorId).name;
+  return allAuthors.find((author) => author.id === authorId).name;
 }
 
 function getIncludedTagObjects(recipeTagIds, allTags) {
-  return allTags.filter(tag => recipeTagIds.includes(tag.id));
+  return allTags.filter((tag) => recipeTagIds.includes(tag.id));
 }
+*/
 
 function getRecipesWithAuthorsAndTagsFromState(state) {
   if (state.authors.length === 0) {
     return [];
   }
-  return state.recipes.map(recipe => {
+  return state.recipes.map((recipe) => {
     return {
       ...recipe,
-      authorName: getAuthorNameFromId(recipe.authorId, state.authors),
-      tags: getIncludedTagObjects(recipe.tags, state.tags)
+      authorName: recipe.user.name,
+      tags: recipe.tags,
     };
   });
 }
@@ -137,7 +162,7 @@ function mapStateToProps(state) {
     recipes: recipesWithAuthersAndTags,
     tags: state.tags,
     authors: state.authors,
-    apiCallsInProgress: state.apiCallsInProgress
+    apiCallsInProgress: state.apiCallsInProgress,
   };
 }
 
@@ -146,8 +171,8 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadRecipes: bindActionCreators(recipeActions.loadRecipes, dispatch),
       loadTags: bindActionCreators(tagActions.loadTags, dispatch),
-      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
-    }
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+    },
   };
 }
 
